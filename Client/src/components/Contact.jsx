@@ -8,7 +8,6 @@ const Contact = () => {
     const [selectedContact, setSelectedContact] = useState(null); // State for selected contact
 
     useEffect(() => {       
-        
         fetchData();
     }, []);
 
