@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 
-const AddContact = () => {
+const AddContact = ({fetchData}) => {
   const url = 'http://localhost:2000';
   const [formData, setFormData] = useState({
     name: '',
@@ -20,6 +20,8 @@ const AddContact = () => {
       const response = await axios.post(`${url}/add`, formData, {headers: {"contentType": "application/json"}});
       console.log(response.data);
       setFormData({name: '', email: '', phone: ''});
+      fetchData();
+
     }catch(err) {
       console.error(err);
       alert('Failed to add contact');
@@ -52,7 +54,7 @@ const AddContact = () => {
                   <label htmlFor="phone" className="form-label text-dark text-start">Phone Number</label>
                   <input type="text" name='phone' className="form-control" id="phone" onChange={handleInputChange} value={formData.phone}/>
                 </div>
-                <button type="submit" className="btn btn-primary">Add Contact</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Add Contact</button>
               </form>
             </div>
           </div>
