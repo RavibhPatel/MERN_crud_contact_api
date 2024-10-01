@@ -9,10 +9,10 @@ const Contact = () => {
 
     useEffect(() => {       
         
-        fetchData1();
+        fetchData();
     }, []);
 
-    const fetchData1 = async () => {
+    const fetchData = async () => {
         try {
             const response = await axios.get(`${url}/`, { headers: { "contentType": "application/json" } });
             setContacts(response.data.contacts);
@@ -63,7 +63,7 @@ const Contact = () => {
         <div className='container my-5'>
             <div className='row justify-content-center gy-5'>
                 <div className='col-12 '>
-                    <AddContact fetchData={fetchData1} />
+                    <AddContact fetchData={fetchData} />
                 </div>
                 {contacts.map(contact =>
                     <div className='col-12 col-md-10 col-lg-7' key={contact._id} style={{ borderRadius: '10px', border: '3px solid yellow' }}>
