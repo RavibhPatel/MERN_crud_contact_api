@@ -18,6 +18,7 @@ const Contact = () => {
         fetchData();
     },[]);
 
+
     const deleteContact = async (id) => {
         try {
             await axios.delete(`${url}/delete/${id}`,{headers: {"contentType": "application/json"}});
@@ -28,8 +29,28 @@ const Contact = () => {
         }
     }
 
-    const handelEditForm = async (e,id) => {
+    const handelEditForm = async (e) => {
         e.preventDefault();
+        try {
+            const id = e.target.id.value;
+            console.log ("EDit Form Id: ",id)
+            console.log ("EDit Form name: ",e.target.name.value)
+            console.log ("EDit Form email: ",e.target.email.value)
+            console.log ("EDit Form phone: ",e.target.phone.value)
+            
+            const response = await axios.put(`${url}/update/${id}`, {name: e.target.name.value, email: e.target.email.value, phone: e.target.phone.value},{headers: {"contentType": "application/json"}});
+            console.log("Edit Contact Value :",response.data);
+            const updatedContacts = contacts.map(contact => contact._id === id? response.data.data : contact);
+            setContacts(updatedContacts);
+            // Reset the form
+            e.target.name.value = '';
+            e.target.email.value = '';
+            e.target.phone.value = '';
+            // Close the modal
+            document.getElementById('editContactModal').style.display = 'none';
+        } catch (error) {
+            console.error(error);
+        }
         
     }
     
@@ -45,16 +66,16 @@ const Contact = () => {
                         <div className=' text-start'>
                             <h3 className='mb-3 fw-bold fs-3'>{contact.name}</h3>
                             <p className='mb-3'>{contact.email}</p>
-                            <p className='mb-0'>{contact.email}</p>
+                            <p className='mb-0'>{contact.phone}</p>
                         </div>
                         <div className='d-flex flex-column align-items-center justify-content-center'>
                             {/* <!-- Button trigger modal --> */}
-                            <button type="button" className='btn btn-info mb-3' onClick={()=>editContact(contact._id)} data-bs-toggle="modal" data-bs-target="#editContactModal">
+                            <button type="button" className='btn btn-info mb-3' data-bs-toggle="modal" data-bs-target="#editContactModal">
                                 Edit
                             </button>
 
                             {/* <!-- Modal --> */}
-                            <div className="modal fade" id="editContactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
+                            <div className="modal fade" id="editContactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
                                 <div className="modal-dialog modal-dialog-centered">
                                     <div className="modal-content">
                                         <div className="modal-header">
@@ -63,17 +84,18 @@ const Contact = () => {
                                         </div>
                                         <div className="modal-body">
                                             <form onSubmit={handelEditForm}>
+                                                <input type="hidden" name='id' value={contact._id}/>
                                                 <div className="mb-3">
                                                     <label htmlFor="name" className="form-label text-dark">Name</label>
-                                                    <input type="email" name='name' className="form-control" id="name" aria-describedby="emailHelp" required/>
+                                                    <input type="text" name='name' className="form-control" id="name" aria-describedby="emailHelp"  required/>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="email" className="form-label text-dark">Email</label>
-                                                    <input type="email" name='email' className="form-control" id="email" aria-describedby="emailHelp" required/>
+                                                    <input type="email" name='email' className="form-control" id="email" aria-describedby="emailHelp"  required/>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="phone" className="form-label text-dark">Phone</label>
-                                                    <input type="text" name='phone' className="form-control" id="phone" required />
+                                                    <input type="text" name='phone' className="form-control" id="phone"  required />
                                                 </div>
                                             
                                                 <button type="submit" className="btn btn-primary">Submit</button>
