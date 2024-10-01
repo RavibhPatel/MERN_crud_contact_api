@@ -50,7 +50,7 @@ app.post('/add', async (req,res)=>{
 app.put('/update/:id', async(req,res)=>{
     try{
         const id = req.params.id;
-        const updateContact = req.body;
+        const updateContact = req.body; //
         let contact = await Contact.findById(id);
         if(!contact) return res.status(404).json({message: 'Contact Not Found'}); 
         let data = await Contact.findByIdAndUpdate(id, updateContact,{new: true});
