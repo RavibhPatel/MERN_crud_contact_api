@@ -43,7 +43,7 @@ const Contact = () => {
             const updatedContacts = contacts.map(contact => contact._id === id? response.data.data : contact);
             setContacts(updatedContacts);
             // Reset the form
-            e.target.name.value = '';
+            e.target.name.value = '';  
             e.target.email.value = '';
             e.target.phone.value = '';
             // Close the modal
