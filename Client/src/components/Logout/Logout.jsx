@@ -9,7 +9,7 @@ const Logout = () => {
         localStorage.removeItem("authToken");
     
         // Redirect the user to the login page
-        navigate("/login");
+        navigate("/");
       }, [navigate]);
   return (
     <div>

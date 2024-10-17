@@ -29,9 +29,11 @@ const Login = () => {
     }
   return (
     <div className='container'>
-        <div className="row">
+        <div className="row align-items-center justify-content-between">
             <div className="col-md-6">
-
+                <div style={{"borderRadius":"10px", "overflow":"hidden"}}>
+                    <img src="/images/login-side-image.jpg" alt="" className=" img-fluid w-100"/>
+                </div>
             </div>    
             <div className="col-md-6">
             {error && <p style={{ color: "red" }}>{error}</p>}

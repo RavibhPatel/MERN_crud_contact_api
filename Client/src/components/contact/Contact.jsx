@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../../node_modules/bootstrap/dist/js/bootstrap.js';
 import axios from 'axios';
 import AddContact from './AddContact';
 import Logout from '../Logout/Logout';
