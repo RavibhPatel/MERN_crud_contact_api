@@ -2,7 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'express';
 import contactRouter from './Routes/Contact.js';
+import userRouter from './Routes/User.js';
 import cors from 'cors';
+import { config } from 'dotenv';
 
 const app = express();
 const port = 2000;
@@ -15,12 +17,15 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://ravibhpatel:pdHdfRUTVpfY1jA0@cluster0.vqtsa.mongodb.net/',{
-    dbName: 'mern_contacts_api'
-}).then(()=>console.log('MongoDb Connect Successfully'))
+config({path: '.env'});
+
+mongoose.connect( process.env.MongoUrl,{dbName: 'mern_contacts_api'})
+.then(()=>console.log('MongoDb Connect Successfully'))
 .catch(err=> console.log(err));
 
 app.use('/', contactRouter);
+
+app.use('/user', userRouter);
 
 
 
