@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import '../../node_modules/bootstrap/dist/js/bootstrap.js';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 const AddContact = ({fetchData}) => {
   const url = 'http://localhost:2000';

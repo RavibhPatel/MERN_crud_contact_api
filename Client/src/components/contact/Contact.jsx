@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddContact from './AddContact';
+import Logout from '../Logout/Logout';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
     const url = 'http://localhost:2000';
@@ -62,7 +64,12 @@ const Contact = () => {
         <div className='container my-5'>
             <div className='row justify-content-center gy-5'>
                 <div className='col-12 '>
-                    <AddContact fetchData={fetchData} />
+                    <div className='d-flex align-items-center justify-content-center'>
+                        <AddContact fetchData={fetchData} />
+                        <button className='btn btn-danger ms-3'>
+                            <Link to={'/logout'} className=' text-decoration-none text-light'>Logout</Link>
+                        </button>
+                    </div>
                 </div>
                 {contacts.map(contact =>
                     <div className='col-12 col-md-10 col-lg-7' key={contact._id} style={{ borderRadius: '10px', border: '3px solid yellow' }}>
