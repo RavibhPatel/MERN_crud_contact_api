@@ -55,7 +55,6 @@ const Contact = () => {
             const response = await axios.put(`${url}/update/${id}`, updatedContact, { headers: { "contentType": "application/json" } });
             const updatedContacts = contacts.map(contact => contact._id === id ? response.data.contact : contact);
             setContacts(updatedContacts);
-
             setSelectedContact(null);
             document.getElementById('editContactModal').style.display = 'none';
             
@@ -100,7 +99,7 @@ const Contact = () => {
                             <div className='created-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Created By</h3>
                                 {/* Show created by */}
-                                <p className='mt-2   text-light'>Created by: {contact.createdBy === loggedInUserId ? 'You' : 'Another user'}</p>
+                                <p className='mt-2   text-light'>Created by: {contact.createdBy === loggedInUserId ? 'You' : 'Another user'}</p>                                
                             </div>
                             <div className='updated-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Last Update By</h3>
