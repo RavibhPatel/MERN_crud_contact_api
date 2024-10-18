@@ -10,8 +10,8 @@ const Contact = () => {
     const [contacts, setContacts] = useState([]);
     const [selectedContact, setSelectedContact] = useState(''); 
     const loggedInUserId = localStorage.getItem('userId'); // Get logged-in user's ID
-    console.log(loggedInUserId);
-    useEffect(() => {       
+    
+    useEffect(() => {  
         fetchData();
     }, []);
 
@@ -35,7 +35,7 @@ const Contact = () => {
     }
 
     const handleEditClick = (contact) => {
-        console.log(contact);
+        
         setSelectedContact(contact);
 
     }
@@ -44,14 +44,14 @@ const Contact = () => {
         e.preventDefault();
         try {
             const id = selectedContact._id;
-            console.log(id);
+            
             const updatedContact = {
                 name: e.target.name.value,
                 email: e.target.email.value,
                 phone: e.target.phone.value,
                 lastModifiedBy: loggedInUserId  // Pass logged-in user's ID
             };
-            console.log('Updated Contact Data:', updatedContact);
+            
             const response = await axios.put(`${url}/update/${id}`, updatedContact, { headers: { "contentType": "application/json" } });
             const updatedContacts = contacts.map(contact => contact._id === id ? response.data.contact : contact);
             setContacts(updatedContacts);
@@ -62,6 +62,7 @@ const Contact = () => {
             console.error(error);
         }
     }
+
 
     return (
         <div className='container my-5'>
@@ -76,7 +77,9 @@ const Contact = () => {
                 </div>
 
                 {contacts.map(contact => (
+                    
                     <div className='col-12' key={contact._id} style={{ borderRadius: '10px', border: '3px solid yellow' }}>
+                        
                         <div className='d-flex align-items-start justify-content-between p-5'>
                             <div className='text-start'>
                                 <h3 className='mb-3 fw-bold fs-3'>{contact.name}</h3>
@@ -99,13 +102,13 @@ const Contact = () => {
                             <div className='created-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Created By</h3>
                                 {/* Show created by */}
-                                <p className='mt-2   text-light'>Created by: {contact.createdBy === loggedInUserId ? 'You' : 'Another user'}</p>                                
+                                <p className='mt-2   text-light'>Created by: {contact.userId === loggedInUserId ? "You" : 'Another User' }</p>                                
                             </div>
                             <div className='updated-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Last Update By</h3>
                                 {/* Show last modified by if different from creator */}
-                                {contact.lastModifiedBy && contact.lastModifiedBy !== contact.createdBy && (
-                                    <p className='mt-2   text-light'>Last changed by: {contact.lastModifiedBy === loggedInUserId ? 'You' : 'Another user'}</p>
+                                {contact.lastModifiedBy && contact.lastModifiedBy !== contact.userId && (
+                                    <p className='mt-2   text-light'>Last changed by: {contact.lastModifiedBy === loggedInUserId ? "You" : 'Another user'}</p>
                                 )}
                             </div>
                         </div>

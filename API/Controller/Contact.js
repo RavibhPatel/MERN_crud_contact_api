@@ -15,19 +15,6 @@ export const getAllContact = async (req,res)=>{
 
 // Edit a contact
 
-// export const editContact = async(req,res)=>{
-//     try{
-//         const id = req.params.id;
-//         const updateContact = req.body; //
-//         let contact = await Contact.findById(id);
-//         if(!contact) return res.status(404).json({message: 'Contact Not Found'}); 
-//         let data = await Contact.findByIdAndUpdate(id, updateContact,{new: true});
-//         res.json({message: 'Contact Updated Successfully',data}); 
-//     }catch(err){
-//         res.json({error: "Server error: " + err.message});
-//     }
-// }
-
 export const editContact = async (req, res) => {
     try {
         console.log('Request Body:', req.body);  // Debugging line
