@@ -1,5 +1,5 @@
 import express from 'express';
-import { addContact, deleteContact, editContact, getAllContact } from '../Controller/Contact.js';
+import { addContact, deleteContact, editContact, getAllContact, getContactByUserId } from '../Controller/Contact.js';
 
 
 const router = express.Router();
@@ -16,5 +16,7 @@ router.put('/update/:id' , editContact)
 // Delete a contact
 router.delete('/delete/:id', deleteContact);
 
+// Get Contact By UserId
+router.get('/userId/:id', getContactByUserId);
 
 export default router;

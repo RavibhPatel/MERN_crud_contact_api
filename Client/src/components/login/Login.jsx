@@ -14,9 +14,9 @@ const Login = () => {
         e.preventDefault();
         try{
             const response = await axios.post('http://localhost:2000/user/login', {email, password});
-            console.log(response.data);
             if(response.data){
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userId', response.data.user._id);
                 navigate('/contact');
             }else{
                 setError("Invalid email or password");
@@ -24,7 +24,7 @@ const Login = () => {
                 setPassword('');
             }
         }catch (err){
-            setError(err.message);
+            setError(`User Not Found ${err.message}`);
         }
     }
   return (

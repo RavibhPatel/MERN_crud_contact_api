@@ -43,7 +43,7 @@ const RegisterUser = () => {
                 {success && <p style={{ color: "green" }}>Registration successful!</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputName" className="form-label">Email address</label>
+                        <label htmlFor="exampleInputName" className="form-label">Name</label>
                         <input 
                             type="text" 
                             className="form-control" 
@@ -56,7 +56,7 @@ const RegisterUser = () => {
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                         <input 
                             type="email" 
                             className="form-control" 

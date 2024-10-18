@@ -13,7 +13,7 @@ export const getAllUser = async (req, res, next) => {
         if(!user) return res.status(404).json({message:"User not found"})
         res.json({message:"All Users", user});
     }catch (err) {
-        res.json({error: err.message});
+        res.json({error: "Server error: " + err.message});
     }
 }
 
@@ -26,12 +26,12 @@ export const addUser = async (req, res) => {
         const hashedPassword = await bycrypt.hash(password, salt);
 
         let user = await User.findOne({email});
-        if (user) return res.json({message: "User already exists"});
+        if (user) return res.json({success: false, message: "User already exists"});
         user = await User.create({name:name, email:email, password:hashedPassword});
-        res.json({message: "User created successfully"});
+        res.json({ success: true, message: "User created successfully" , user });
 
     }catch (err){
-        res.json({error: err.message});
+        res.json({success: false, error: "Server error: " + err.message});
     }
 }
 
@@ -47,8 +47,8 @@ export const loginUser = async (req, res, next) => {
 
         // Generate JWT
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
-        res.json({message: "Logged in successfully", token});
+        res.json({message: "Logged in successfully", token, user});
     }catch (err){
-        res.json({error: err.message});
+        res.json({error: "Server error: " + err.message});
     }
 }
