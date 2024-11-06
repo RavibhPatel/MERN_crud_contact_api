@@ -84,7 +84,6 @@ const RegisterUser = () => {
                 </form>
             </div>
         </div>
-
     </div>
   )
 }

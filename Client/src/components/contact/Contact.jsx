@@ -10,15 +10,27 @@ const Contact = () => {
     const [contacts, setContacts] = useState([]);
     const [selectedContact, setSelectedContact] = useState(''); 
     const loggedInUserId = localStorage.getItem('userId'); // Get logged-in user's ID
+
+    const [loggedInUserName , setLoggedInUserName] = useState('');
     
     useEffect(() => {  
         fetchData();
+        fetchuser();
     }, []);
 
     const fetchData = async () => {
         try {
             const response = await axios.get(`${url}/`, { headers: { "contentType": "application/json" } });
             setContacts(response.data.contacts);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const fetchuser = async () => {
+        try {
+            const response = await axios.get(`${url}/user/${loggedInUserId}`, { headers: { "contentType": "application/json" } });
+            setLoggedInUserName(response.data.user.name);
         } catch (error) {
             console.error(error);
         }
@@ -97,18 +109,18 @@ const Contact = () => {
                                     Edit
                                 </button>
 
-                                <button className='btn btn-danger ms-2' onClick={() => deleteContact(contact._id)}>Delete</button>
+                                <button className='btn btn-danger' onClick={() => deleteContact(contact._id)}>Delete</button>
                             </div>
                             <div className='created-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Created By</h3>
                                 {/* Show created by */}
-                                <p className='mt-2   text-light'>Created by: {contact.userId === loggedInUserId ? "You" : 'Another User' }</p>                                
+                                <p className='mt-2   text-light'>Created by: {contact.userId === loggedInUserId ? loggedInUserName : 'Another User' }</p>                                
                             </div>
                             <div className='updated-by-user'>
                                 <h3 className=' text-center text-light mb-3'>Last Update By</h3>
                                 {/* Show last modified by if different from creator */}
                                 {contact.lastModifiedBy && contact.lastModifiedBy !== contact.userId && (
-                                    <p className='mt-2   text-light'>Last changed by: {contact.lastModifiedBy === loggedInUserId ? "You" : 'Another user'}</p>
+                                    <p className='mt-2   text-light'>Last changed by: {contact.lastModifiedBy === loggedInUserId ? loggedInUserName : 'Another user'}</p>
                                 )}
                             </div>
                         </div>

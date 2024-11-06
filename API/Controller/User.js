@@ -2,6 +2,7 @@ import {User} from '../Models/User.js';
 import bycrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from "dotenv";
+import mongoose from 'mongoose';
 
 // .env
 
@@ -54,12 +55,27 @@ export const loginUser = async (req, res, next) => {
 }
 
 // Get the User By Id 
+
+
 export const getUserById = async (req, res) => {
-    try{
-        const user = await User.findById(req.params.id);
-        if(!user) return res.status(404).json({message: "User not found"});
-        res.json({user});
-    }catch (err){
-        res.json({error: "Server error: " + err.message});
+    try {
+        const userId = req.params.id;        
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            console.log("Invalid ID format");
+            return res.status(400).json({ message: "Invalid user ID format" });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            console.log("User not found in database");
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({ message: "Current User:", user });
+    } catch (err) {
+        console.error("Server error:", err.message);
+        res.status(500).json({ error: "Server error: " + err.message });
     }
-}
+};
+
+
