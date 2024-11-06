@@ -55,8 +55,6 @@ export const loginUser = async (req, res, next) => {
 }
 
 // Get the User By Id 
-
-
 export const getUserById = async (req, res) => {
     try {
         const userId = req.params.id;        
